@@ -2,6 +2,10 @@ FROM redmine:3.4
 
 ENV PASSENGER_VERSION 6.0.4
 
+# Apply patches
+COPY *.patch patches/
+RUN for i in patches/*.patch; do git apply $i; done ; rm -rf patches
+
 RUN set -eux; \
 	\
 	apt-get update; \
