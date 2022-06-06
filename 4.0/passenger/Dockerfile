@@ -2,6 +2,14 @@ FROM redmine:4.0
 
 ENV PASSENGER_VERSION 6.0.12
 
+# Apply patches
+COPY *.patch patches/
+# RUN git apply patches/0001-login-by-mail.patch
+RUN for i in patches/*.patch; do git apply $i; done ; rm -rf patches
+RUN head -n 228 app/models/user.rb | tail -n -15
+
+RUN xxx
+
 RUN set -eux; \
 	\
 	apt-get update; \
